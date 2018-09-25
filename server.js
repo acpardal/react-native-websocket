@@ -5,10 +5,6 @@ var io = require('socket.io')(http);
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
-app.get('/example', function(req, res){
-  res.setHeader('Content-Type', 'application/json');
-  res.sendFile(__dirname + '/example.json');
-});
 
 io.on('connection', function(socket){
   console.log('a user connected');

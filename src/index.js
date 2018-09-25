@@ -1,38 +1,28 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-/* Reducers */
-import getText from './components/list/reducer';
-
-/* Components */
+/* From app developer */
+import conf from './conf.json';
 import PriceList from './components/list';
+import getText from './components/list/reducer';
 
 const store = createStore(getText, applyMiddleware(thunk));
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    title: 'Cryptocurrencies',
+    title: conf.title,
     headerStyle: {
-      backgroundColor: '#060BA3',
+      backgroundColor: conf.header.backgroundColor,
     }
   };
-
-  constructor(props) {
-    super(props);
-
-    this.state = { text: 'Price Feed' };
-  }
 
   render() {
     return (
       <Provider store={store}>
-        <View>
-          <Text>{this.state.text}</Text>
-          <PriceList></PriceList>
-        </View>
+        <PriceList></PriceList>
       </Provider>
     );
   }

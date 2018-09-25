@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-
+import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { initConnection } from './actions';
 
+import conf from '../../conf.json';
+import { initConnection } from './actions';
 import List from './list.js';
 
 class ContainerList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { text: conf.main.title };
+  }
+  
   componentDidMount() {
-    this.props.initConnection('http://10.0.2.2:3000');
+    this.props.initConnection(conf.endpoint);
   }
 
   render() {
     return (
       <View>
-        <Text>{this.props.isConnectionEstablished ? 'Connected' : 'Disconnected'}</Text>
+        <View style={styles.list}>
+          <Text>{this.state.text}</Text>
+          <Text>{this.props.isConnectionEstablished ? 'Connected' : 'Disconnected'}</Text>
+        </View>
         <List feed={this.props.prices}/>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  list: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+});
 
 const mapStateToProps = state => {
   return Object.assign({}, state);

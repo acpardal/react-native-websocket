@@ -1,0 +1,10 @@
+{
+  "title": "Cryptocurrencies",
+  "header": {
+    "backgroundColor": "#060BA3"
+  },
+  "main": {
+    "title": "Price Feed"
+  },
+  "endpoint": "http://10.0.2.2:3000"
+}
