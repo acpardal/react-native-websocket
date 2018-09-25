@@ -5,6 +5,8 @@ import io from 'socket.io-client';
  */
 
 export const INIT_CONNECTION = 'INIT_CONNECTION';
+export const CONNECTION_ESTABLISHED = 'CONNECTION_ESTABLISHED';
+export const DISCONNECTED = 'DISCONNECTED';
 export const RECEIVED_DATA = 'RECEIVED_DATA';
 
 /*
@@ -15,11 +17,24 @@ export function initConnection(endpoint) {
   return dispatch => {
     /* ANDROID EMULATOR */
     const socket = io(endpoint);
-    socket.on('chat message', msg => {  
+    socket.on('connect', () => {
+      dispatch(connectionEstablished());
+    });
+    socket.on('chat message', msg => {
       dispatch(receivedData(msg));
     });
-
+    socket.on('disconnect', () => {
+      dispatch(disconnected());
+    });
   }
+}
+
+export function connectionEstablished() {
+  return { type: CONNECTION_ESTABLISHED }
+}
+
+export function disconnected() {
+  return { type: DISCONNECTED }
 }
 
 export function receivedData(msg) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { connect } from 'react-redux';
 import { initConnection } from './actions';
@@ -14,6 +14,7 @@ class ContainerList extends Component {
   render() {
     return (
       <View>
+        <Text>{this.props.isConnectionEstablished ? 'Connected' : 'Disconnected'}</Text>
         <List feed={this.props.prices}/>
       </View>
     );
@@ -21,10 +22,7 @@ class ContainerList extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    text: state.text,
-    prices: state.prices
-  };
+  return Object.assign({}, state);
 };
 
 const mapDispatchToProps = dispatch => {
