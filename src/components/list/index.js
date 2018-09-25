@@ -12,7 +12,7 @@ class ContainerList extends Component {
 
     this.state = { text: conf.main.title };
   }
-  
+
   componentDidMount() {
     this.props.initConnection(conf.endpoint);
   }
