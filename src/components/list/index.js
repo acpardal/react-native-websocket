@@ -14,7 +14,6 @@ class ContainerList extends Component {
   }
 
   componentDidMount() {
-    alert(1);
     this.props.initConnection(conf.endpoint);
   }
 
