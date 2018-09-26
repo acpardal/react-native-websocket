@@ -7,8 +7,9 @@ import io from 'socket.io-client';
 export const CONNECTION_INIT = 'CONNECTION_INIT';
 export const CONNECTION_ESTABLISHED = 'CONNECTION_ESTABLISHED';
 export const CONNECTION_ERROR = 'CONNECTION_ERROR';
-export const DISCONNECTED = 'DISCONNECTED';
 export const RECEIVED_DATA = 'RECEIVED_DATA';
+export const DISCONNECTED = 'DISCONNECTED';
+export const DISCONNECTING_ERROR = 'DISCONNECTING_ERROR';
 
 /*
  * action creators
@@ -62,4 +63,8 @@ export function receivedData(msg) {
 
 export function disconnected() {
   return { type: DISCONNECTED }
+}
+
+export function disconnectingError(error) {
+  return { type: DISCONNECTING_ERROR, error }
 }
