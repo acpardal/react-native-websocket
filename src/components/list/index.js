@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 
 import conf from '../../conf.json';
-import { initConnection } from './actions';
+import { initConnection, disconnect } from './actions';
 import List from './list.js';
 
 class ContainerList extends Component {
@@ -14,7 +14,23 @@ class ContainerList extends Component {
   }
 
   componentDidMount() {
+    alert(1);
     this.props.initConnection(conf.endpoint);
+  }
+
+  componentWillUnmount() {
+    this.props.disconnect(this.props.socket);
+  }
+
+  _onPressReconnect = () => {
+    let { isConnectionEstablished, isConnectionPending } = this.props;
+    if(!isConnectionEstablished && !isConnectionPending) {
+      this.props.initConnection(conf.endpoint);
+    }
+  }
+
+  _onPressDisconnect = () => {
+    this.props.disconnect(this.props.socket);
   }
 
   render() {
@@ -25,6 +41,16 @@ class ContainerList extends Component {
           <Text>{this.props.isConnectionEstablished ? 'Connected' : 'Disconnected'}</Text>
         </View>
         <List feed={this.props.prices}/>
+        <Button
+          onPress={this._onPressReconnect}
+          title={conf.button.reconnect.title}
+          color={conf.button.reconnect.color}
+        />
+        <Button
+          onPress={this._onPressDisconnect}
+          title={conf.button.disconnect.title}
+          color={conf.button.disconnect.color}
+        />
       </View>
     );
   }
@@ -37,12 +63,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => {
-  return Object.assign({}, state);
-};
+const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => {
   return {
+    disconnect: (socket) => dispatch(disconnect(socket)),
     initConnection: (endpoint) => dispatch(initConnection(endpoint))
   }
 }

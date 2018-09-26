@@ -6,5 +6,15 @@
   "main": {
     "title": "Price Feed"
   },
-  "endpoint": "http://10.0.2.2:3000"
+  "endpoint": "http://10.0.2.2:3000",
+  "button": {
+    "reconnect": {
+      "title": "Reconnect Feed",
+      "color": "#060FFF"
+    },
+    "disconnect": {
+      "title": "Disconnect Feed",
+      "color": "#060BA3"
+    }
+  }
 }
